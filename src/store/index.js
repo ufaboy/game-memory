@@ -6,9 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isStartedGame: false,
-    cellArray: [],
-    firstCell: null,
-    secondCell: null,
+    resultArray: []
   },
   mutations: {
     setStartedGame(state) {
@@ -17,13 +15,17 @@ export default new Vuex.Store({
     setStoppedGame(state) {
       state.isStartedGame = false
     },
-    setCellArray (state, payload) {
-      state.cellArray = payload
-    }
-
+    setUser(state, payload) {
+      state.resultArray.push(payload)
+    },
   },
   actions: {
+    setStartedGame({ commit }) {
+      commit('setStartedGame')
+    },
+    setFinishGame({ commit }, payload) {
+      commit('setStoppedGame')
+      commit('setUser', payload)
+    }
   },
-  modules: {
-  }
 })
