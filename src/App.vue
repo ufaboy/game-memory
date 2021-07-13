@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="app" :class="{playing: isStartedGame}">
     <header class="header">
-      <h1>Игра Память</h1>
+      <h1 class="header__title">Игра Память</h1>
       <span class="timer">{{ timer }}</span>
     </header>
     <main class="main">
@@ -15,8 +15,8 @@
         </div>
       </div>
       <section class="action-panel">
-        <label class="label">Введи свое имя</label>
-        <input class="input" type="text" v-model="playerName" autofocus>
+        <label class="label">Привет я игра Memory, а как тебя зовут?</label>
+        <input class="input" type="text" v-model="playerName" placeholder="Choosen One" autofocus>
         <button class="btn" @click="startGame">{{ isStartedGame ? 'Стоп' : 'Старт' }}</button>
       </section>
       <table class="table" v-if="allCellsOpened">
@@ -35,6 +35,9 @@
         </tbody>
       </table>
     </main>
+    <footer>
+
+    </footer>
   </div>
 </template>
 
@@ -168,15 +171,20 @@ html {
 body {
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-#app {
+.app {
   width: 15rem;
 }
 
 .header {
   margin-bottom: 1rem;
   text-align: center;
+  .header__title {
+    margin-bottom: 1rem;
+  }
 }
 
 .main {
@@ -185,7 +193,9 @@ body {
   align-items: center;
   flex-flow: column nowrap;
 }
-
+.timer {
+  font-size: 2rem;
+}
 .action-panel {
   display: flex;
   flex-flow: row wrap;
@@ -202,8 +212,13 @@ body {
   .input {
     padding: 0.5rem;
   }
+  .label {
+    font-size: 21px;
+    font-weight: 700;
+  }
 
   .btn {
+    font-size: 1.5rem;
     width: 100%;
     padding: 0.5rem 1rem;
     border-radius: 0.3rem;
@@ -280,6 +295,15 @@ body {
     td {
       padding: 0.3rem;
     }
+  }
+}
+.playing {
+  .timer {
+    color: red;
+  }
+  .btn {
+    color: white;
+    background-color: red;
   }
 }
 </style>
