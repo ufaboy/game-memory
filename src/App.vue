@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -32,17 +33,17 @@ export default {
     intervalId: null,
     interval: null,
     countSeconds: 5,
-    cellArray: [],
-    temporaryOpenedCells: [],
-    firstCell: null,
-    secondCell: null,
+    // cellArray: [],
+    // firstCell: null,
+    // secondCell: null,
   }),
   computed: {
     timer() {
       // return this.interval ? `${this.interval.getHours()}:${this.interval.getMinutes()}:${this.interval.getSeconds()}` : '00:00:00'
       return this.interval ? this.interval.toLocaleTimeString('en-UK',
           {timeZone: 'UTC', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '00:00:00'
-    }
+    },
+    ...mapState(['isStartedGame', 'cellArray', 'firstCell', 'secondCell'])
   },
   created() {
     this.setNewRandomArray()
@@ -104,9 +105,16 @@ export default {
 </script>
 
 <style lang="scss">
+#app {
+  text-align: center;
+}
+.main {
+  display: flex;
+  justify-content: center;
+}
 .table {
   display: flex;
-  width: 17rem;
+  width: 15rem;
   flex-flow: row wrap;
   .cell {
     display: flex;
