@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/game-memory-example/'
+  publicPath: '/game-memory/'
 }
