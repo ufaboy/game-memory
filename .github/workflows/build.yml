@@ -25,8 +25,35 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Add SSH key
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          chmod +x ./deploy.sh
-          ./deploy.sh
+          mkdir -p /home/runner/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /home/runner/.ssh/github_actions
+          chmod 600 /home/runner/.ssh/github_actions
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add /home/runner/.ssh/github_actions
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and deploy
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          git config --global user.email "azat.developer@gmail.com"
+          git config --global user.name "ufaboy"
+          npm run build
+          cd dist
+          git init
+          git add -A
+          git commit -m 'deploy'
+          git push -f git@github.com:ufaboy/game-memory-example.git master -f
+
+
+      # Runs a set of commands using the runners shell
+      #- name: Run a multi-line script
+      #  run: |
+      #    chmod +x ./deploy.sh
+      #    ./deploy.sh
