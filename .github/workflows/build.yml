@@ -11,4 +11,4 @@ jobs:
         with:
           username: 'ufaboy'
           reponame: 'game-memory-example'
-          token: ${{ secrets.DEPLOY_KEY }} # Leave this line unchanged
+          token: ${{ secrets.SSH_PRIVATE_KEY }} # Leave this line unchanged
