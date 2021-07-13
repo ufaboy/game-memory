@@ -1,3 +1,5 @@
 module.exports = {
-  publicPath: '/game-memory-example/'
+  publicPath: process.env.NODE_ENV === 'production'
+      ? '/game-memory-example/'
+      : '/'
 }
