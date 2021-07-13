@@ -11,6 +11,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:ufaboy/game-memory.git developer:gh-pages
+git push -f git@github.com:ufaboy/game-memory.git developer
 
 cd -
