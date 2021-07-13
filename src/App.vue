@@ -2,7 +2,9 @@
   <div id="app" class="app" :class="{playing: isStartedGame}">
     <header class="header">
       <h1 class="header__title">Игра Память</h1>
+      <a href="https://github.com/ufaboy/game-memory" class="link">Ссылка на проект</a>
       <span class="timer">{{ timer }}</span>
+
     </header>
     <main class="main">
       <div class="field">
@@ -35,9 +37,6 @@
         </tbody>
       </table>
     </main>
-    <footer>
-
-    </footer>
   </div>
 </template>
 
@@ -180,9 +179,18 @@ body {
 }
 
 .header {
-  margin-bottom: 1rem;
-  text-align: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
   .header__title {
+    margin-bottom: 0.5rem;
+  }
+  .link {
+    font-size: 1.5rem;
+    text-decoration: none;
     margin-bottom: 1rem;
   }
 }
@@ -297,6 +305,8 @@ body {
     }
   }
 }
+
+
 .playing {
   .timer {
     color: red;
