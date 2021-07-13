@@ -17,4 +17,5 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: dist # The folder the action should deploy
-          token: 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
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          #token: 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
