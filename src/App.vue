@@ -134,11 +134,16 @@ export default {
       this.cellArray = this.calcRandomArray()
     },
     calcRandomArray() {
-      let initArray = Array.from({length: 18}, (value, key) => {
+      const initArray = Array.from({length: 18}, (value, key) => {
         return {value: ++key, hide: true}
       });
-      return [...initArray, ...JSON.parse(JSON.stringify(initArray))]
-          .sort(() => Math.round(Math.random() * 100) - 50)
+      let mainArray = [...initArray, ...JSON.parse(JSON.stringify(initArray))]
+
+      for (let i = mainArray.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [mainArray[i], mainArray[j]] = [mainArray[j], mainArray[i]];
+      }
+      return mainArray;
     },
     resetGame() {
       clearInterval(this.intervalId)
