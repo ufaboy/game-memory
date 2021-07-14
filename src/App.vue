@@ -3,7 +3,7 @@
     <header class="header">
       <h1 class="header__title">Игра Память</h1>
       <a href="https://github.com/ufaboy/game-memory" class="link">Ссылка на проект</a>
-      <span class="timer">{{ timer }}</span>
+      <span class="timer">{{ timerFormat(interval) }}</span>
 
     </header>
     <main class="main">
@@ -32,7 +32,7 @@
         <tbody>
         <tr v-for="(user, index) of resultArray" :key="`user-${index}`">
           <td>{{ user.name }}</td>
-          <td>{{ user.time }}</td>
+          <td>{{ timerFormat(user.time) }}</td>
         </tr>
         </tbody>
       </table>
@@ -58,10 +58,10 @@ export default {
     secondCell: null,
   }),
   computed: {
-    timer() {
-      return this.interval ? this.interval.toLocaleTimeString('en-UK',
-          {timeZone: 'UTC', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}) : '00:00:00'
-    },
+    // timer() {
+    //   return this.interval ? this.interval.toLocaleTimeString('en-UK',
+    //       {timeZone: 'UTC', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}) : '00:00:00'
+    // },
     allCellsOpened() {
       return this.cellArray.findIndex(cell => cell.hide) === -1
     },
@@ -75,7 +75,7 @@ export default {
     allCellsOpened: function (value) {
       if (value) {
         clearInterval(this.intervalId)
-        this.$store.dispatch('setFinishGame', {name: this.playerName ? this.playerName : 'ноунейм', time: this.timer})
+        this.$store.dispatch('setFinishGame', {name: this.playerName ? this.playerName : 'ноунейм', time: this.interval})
       }
     }
   },
@@ -110,11 +110,7 @@ export default {
     },
     checkCells(firstIndex, secondIndex) {
       const resultCompare = this.cellArray[firstIndex].value === this.cellArray[secondIndex].value
-      if (resultCompare) {
-        this.cellArray[secondIndex].hide = false
-        this.firstCell = null
-        this.secondCell = null
-      } else {
+      if (!resultCompare) {
         setTimeout(() => {
           this.cellArray[firstIndex].hide = true
           this.cellArray[secondIndex].hide = true
@@ -122,6 +118,9 @@ export default {
           this.secondCell = null
           clearTimeout(this.resetCellTimer)
         }, 1000)
+      } else {
+        this.firstCell = null
+        this.secondCell = null
       }
     },
     setTimer(cellIndex) {
@@ -149,7 +148,11 @@ export default {
       this.secondCell = null
       this.setNewRandomArray()
       this.$store.commit('setStoppedGame')
-    }
+    },
+    timerFormat(time) {
+      return time ? time.toLocaleTimeString('en-UK',
+          {timeZone: 'UTC', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'}) : '00:00:00'
+    },
   },
 }
 </script>
