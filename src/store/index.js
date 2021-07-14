@@ -28,4 +28,9 @@ export default new Vuex.Store({
       commit('setUser', payload)
     }
   },
+  getters: {
+    resultArray: state => {
+      return state.resultArray.sort((a, b) => a.time - b.time)
+    }
+  }
 })

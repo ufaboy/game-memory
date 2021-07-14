@@ -42,6 +42,7 @@
 
 <script>
 import {mapState} from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'App',
@@ -64,7 +65,8 @@ export default {
     allCellsOpened() {
       return this.cellArray.findIndex(cell => cell.hide) === -1
     },
-    ...mapState(['isStartedGame', 'resultArray'])
+    ...mapState(['isStartedGame']),
+    ...mapGetters(['resultArray'])
   },
   created() {
     this.setNewRandomArray()
@@ -109,7 +111,6 @@ export default {
     checkCells(firstIndex, secondIndex) {
       const resultCompare = this.cellArray[firstIndex].value === this.cellArray[secondIndex].value
       if (resultCompare) {
-        clearTimeout(this.resetCellTimer)
         this.cellArray[secondIndex].hide = false
         this.firstCell = null
         this.secondCell = null
@@ -128,7 +129,6 @@ export default {
         this.cellArray[cellIndex].hide = true
         this.firstCell = null
         this.secondCell = null
-        this.resetCellTimer = null
       }, this.countSeconds * 1000)
     },
     setNewRandomArray() {
