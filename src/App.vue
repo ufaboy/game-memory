@@ -229,7 +229,7 @@ body {
     padding: 0.5rem;
   }
   .label {
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 700;
   }
 
